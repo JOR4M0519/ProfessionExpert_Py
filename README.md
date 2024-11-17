@@ -26,7 +26,9 @@ Este proyecto es una aplicación de escritorio desarrollada en Python, que utili
   Nota: Este archivo contiene las reglas para la recomendación de carrera.
 
 4. Ejecutar el Proyecto
-    Ejecutar el archivo .bat
-    
+   - Ejecutar el archivo .bat
+     
+   - Ejecutar comando en cmd:
+      
     ```bash
     python expert.py
