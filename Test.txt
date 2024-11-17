@@ -1,0 +1,92 @@
+
+### Set 1: Caso se recomienda Humanidades
+fact_string = """
+(estudiante
+  (math 45)
+  (we 60)
+  (natural 30)
+  (social 75)
+  (languagef 80)
+  (p_humanities 5)
+  (p_engineering 4)
+  (p_sciences 3)
+  (p_health 7)
+  (c_math "N/A")
+  (c_social "N/A")
+  (c_natural "N/A")
+  (recommend "N/A"))
+"""
+Resultado:
+- "Puede estudiar Humanidades" 
+
+---
+
+### Set 2: Caso  se recomienda Ingeniería
+```python
+fact_string = """
+(estudiante
+  (math 70)
+  (we 80)
+  (natural 50)
+  (social 85)
+  (languagef 75)
+  (p_humanities 4)
+  (p_engineering 6)
+  (p_sciences 5)
+  (p_health 8)
+  (c_math "N/A")
+  (c_social "N/A")
+  (c_natural "N/A")
+  (recommend "N/A"))
+"""
+Resultado:
+- `recommend`: "Puede estudiar Ingeniería" 
+
+---
+
+### Set 3: Caso límite donde `natural` está exactamente en 40
+```python
+fact_string = """
+(estudiante
+  (math 55)
+  (we 65)
+  (natural 40)
+  (social 70)
+  (languagef 60)
+  (p_humanities 7)
+  (p_engineering 5)
+  (p_sciences 4)
+  (p_health 6)
+  (c_math "N/A")
+  (c_social "N/A")
+  (c_natural "N/A")
+  (recommend "N/A"))
+"""
+Resultado:
+- `recommend`: "Puede estudiar Humanidades" 
+
+---
+
+### Set 4: Caso donde todas las condiciones son excepcionales
+```python
+fact_string = """
+(estudiante
+  (math 90)
+  (we 85)
+  (natural 95)
+  (social 88)
+  (languagef 92)
+  (p_humanities 8)
+  (p_engineering 9)
+  (p_sciences 7)
+  (p_health 8)
+  (c_math "N/A")
+  (c_social "N/A")
+  (c_natural "N/A")
+  (recommend "N/A"))
+"""
+Resultado:
+- `recommend`: "Puede estudiar Salud" 
+
+---
+

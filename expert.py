@@ -44,25 +44,59 @@ def cargar_datos():
 
 
 def ejecutar_inferencia():
-  try:      
-    env.run()
+    try:
+        # Paso 1: Ejecutar motor de inferencia para obtener las categorías
+        env.run()
 
-    # Imprimir el resultado la verificación
-    for fact in env.facts():
-        if 'recommend' in str(fact):
-            recomendacion = fact['recommend']
-            
+        c_math = None
+        c_natural = None
+        c_social = None
+
+        # Extraer categorías de los hechos
+        for fact in env.facts():
+            if 'estudiante' in str(fact): 
+                c_math = fact['c_math']
+                c_natural = fact['c_natural']
+                c_social = fact['c_social']
+
+        # Mostrar categorías en los Entries
+        if c_math is not None:
+            entry_c_math.config(state='normal')
+            entry_c_math.insert(tk.END, c_math)
+            entry_c_math.config(state='disabled')
+
+        if c_natural is not None:
+            entry_c_natural.config(state='normal')
+            entry_c_natural.insert(tk.END, c_natural)
+            entry_c_natural.config(state='disabled')
+
+        if c_social is not None:
+            entry_c_social.config(state='normal')
+            entry_c_social.insert(tk.END, c_social)
+            entry_c_social.config(state='disabled')
+
+        # Paso 2: Cargar reglas para recomendaciones y ejecutar nuevamente
+        rule_file_r = 'rule_file_result.clp'
+        env.load(rule_file_r)
+        env.run()
+
+        recomendacion = None
+
+        # Extraer la recomendación
+        for fact in env.facts():
+            if 'recommend' in str(fact):  
+                recomendacion = fact['recommend']
+                break
+
+        # Mostrar la recomendación en el Text Area
+        if recomendacion is not None:
             text_area.config(state='normal')
-            
-            # Mostrar la recomendación en el text area
-            text_area.delete(1.0, tk.END)  # Limpiar el área de texto
             text_area.insert(tk.END, f"Recomendación: {recomendacion}")
-            
             text_area.config(state='disabled')
 
-            break
-  except Exception:
-        messagebox.showerror("Error", "Por favor, volver a intnentar")
+    except Exception:
+        messagebox.showerror("Error", "Por favor, volver a intentar")
+
 
 # Configurar entorno CLIPS
 env = clips.Environment()
@@ -88,8 +122,10 @@ template_string = """
 env.build(template_string)
 
 # Cargar archivo de reglas
-rule_file = 'rule_file.CLP'
+rule_file = 'rule_file_cat.CLP'
 env.load(rule_file)
+
+
 
 
 # Configurar interfaz gráfica con Tkinter
@@ -123,6 +159,7 @@ label_languagef.grid(row=4, column=0)
 entry_languagef = tk.Entry(root)
 entry_languagef.grid(row=4, column=1)
 
+#Preferencias de estudio
 label_p_humanities = tk.Label(root, text="Preferencia por Humanidades:")
 label_p_humanities.grid(row=5, column=0)
 entry_p_humanities = tk.Entry(root)
@@ -143,17 +180,36 @@ label_p_health.grid(row=8, column=0)
 entry_p_health = tk.Entry(root)
 entry_p_health.grid(row=8, column=1)
 
+#Categorias de Materias
+label_c_math = tk.Label(root, text="Cat. Matematicas:")
+label_c_math.grid(row=9, column=0)
+entry_c_math = tk.Entry(root)
+entry_c_math.grid(row=9, column=1)
+entry_c_math.config(state='disabled')
+
+label_c_natural = tk.Label(root, text="Cat. Naturales:")
+label_c_natural.grid(row=10, column=0)
+entry_c_natural = tk.Entry(root)
+entry_c_natural.grid(row=10, column=1)
+entry_c_natural.config(state='disabled')
+
+label_c_social = tk.Label(root, text="Cat. Social:")
+label_c_social.grid(row=11, column=0)
+entry_c_social = tk.Entry(root)
+entry_c_social.grid(row=11, column=1)
+entry_c_social.config(state='disabled')
+
 # Área de texto de recomendación
 text_area = tk.Text(root, height=5, width=50)
-text_area.grid(row=9, column=0, columnspan=2)
+text_area.grid(row=12, column=0, columnspan=2)
 text_area.config(state='disabled')
 
 # Botones para cargar datos y ejecutar
 button_cargar = tk.Button(root, text="Cargar Datos", command=cargar_datos)
-button_cargar.grid(row=10, column=0)
+button_cargar.grid(row=13, column=0)
 
 button_ejecutar = tk.Button(root, text="Ejecutar Recomendación", command=ejecutar_inferencia)
-button_ejecutar.grid(row=10, column=1)
+button_ejecutar.grid(row=13, column=1)
 button_ejecutar.config(state='disabled')
 
 
