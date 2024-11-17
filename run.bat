@@ -1,3 +1,1 @@
 python expert.py
-
-pause
